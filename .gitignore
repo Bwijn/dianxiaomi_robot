@@ -1,0 +1,8 @@
+venv
+
+#*.py
+#*.html
+
+.idea/
+
+#!Modify failed product/*

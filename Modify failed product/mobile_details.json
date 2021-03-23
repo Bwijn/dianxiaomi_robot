@@ -1,0 +1,69 @@
+{
+  "version": "2.0.0",
+  "moduleList": [
+    {
+      "type": "text",
+      "texts": [
+        {
+          "class": "body",
+          "content": "Welcome to BZ Professional sticker store!\nIt can also be pasted on for example: cars, motorcycles, bicycles, laptop, refrigerators, skateboards, guitars, cups, cabinets, doors, air conditioners, televisions, microwave ovens, plastic boxes \nUniversal fitment to all the vehicles.\nOur products are durable to heat and sunlight, so it's not faded at least for years.\nColors may be slightly different depending on your monitor setting.\nIf you need special size or color of this product,\nOr if you have a photo you like and need to make a sticker,\nyou can also provide images, We can customize any size and stickers for you, please Contact us\nTo my shop in other stickers, there will be you like, Click Here"
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "images": [
+        {
+          "url": "https://ae03.alicdn.com/kf/He15f8581a93a4198be20110f505b0d05p.jpg",
+          "style": {
+            "width": "0",
+            "height": "0",
+            "hasMargin": false
+          },
+          "targetUrl": ""
+        }
+      ]
+    },
+    {
+      "type": "image",
+      "images": [
+        {
+          "url": "https://ae01.alicdn.com/kf/Ha6ee8bf6ad8c499d99fc15b1a679e0a9O.jpg?width=960&height=528&hash=1488",
+          "style": {
+            "width": "960",
+            "height": "528",
+            "hasMargin": false
+          },
+          "targetUrl": ""
+        },
+        {
+          "url": "https://ae01.alicdn.com/kf/H6dbe4c66f0774b4e83646ca1f38d63b0I.jpg?width=960&height=405&hash=1365",
+          "style": {
+            "width": "960",
+            "height": "405",
+            "hasMargin": false
+          },
+          "targetUrl": ""
+        },
+        {
+          "url": "https://ae01.alicdn.com/kf/H8aa16a1aff824a76b252368228a22741B.jpg?width=960&height=964&hash=1924",
+          "style": {
+            "width": "960",
+            "height": "964",
+            "hasMargin": false
+          },
+          "targetUrl": ""
+        },
+        {
+          "url": "https://ae01.alicdn.com/kf/H790a4d3375e7419aac854b0fe9feace0N.jpg?width=960&height=964&hash=1924",
+          "style": {
+            "width": "960",
+            "height": "964",
+            "hasMargin": false
+          },
+          "targetUrl": ""
+        }
+      ]
+    }
+  ]
+}

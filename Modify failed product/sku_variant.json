@@ -1,0 +1,74 @@
+[
+  {
+    "id": "200000182:193;5:100014064",
+    "ipmSkuStock": 999,
+    "skuPrice": "2.3",
+    "skuStock": true,
+    "aeopSKUProperty": [
+      {
+        "propertyValueId": 193,
+        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
+        "propertyValueDefinitionName": "style A",
+        "skuPropertyId": 200000182,
+        "themeVal": "颜色",
+        "attrVal": "黑色"
+      },
+      {
+        "propertyValueId": 100014064,
+        "propertyValueDefinitionName": "8 cm",
+        "skuPropertyId": 5,
+        "themeVal": "尺寸",
+        "attrVal": "S"
+      }
+    ],
+    "skuCode": ""
+  },
+  {
+    "id": "200000182:193;5:361386",
+    "ipmSkuStock": 999,
+    "skuPrice": "3.1",
+    "skuStock": true,
+    "aeopSKUProperty": [
+      {
+        "propertyValueId": 193,
+        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
+        "propertyValueDefinitionName": "style A",
+        "skuPropertyId": 200000182,
+        "themeVal": "颜色",
+        "attrVal": "黑色"
+      },
+      {
+        "propertyValueId": 361386,
+        "propertyValueDefinitionName": "12cm",
+        "skuPropertyId": 5,
+        "themeVal": "尺寸",
+        "attrVal": "M"
+      }
+    ],
+    "skuCode": ""
+  },
+  {
+    "id": "200000182:193;5:361385",
+    "ipmSkuStock": 999,
+    "skuPrice": "4.5",
+    "skuStock": true,
+    "aeopSKUProperty": [
+      {
+        "propertyValueId": 193,
+        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
+        "propertyValueDefinitionName": "style A",
+        "skuPropertyId": 200000182,
+        "themeVal": "颜色",
+        "attrVal": "黑色"
+      },
+      {
+        "propertyValueId": 361385,
+        "propertyValueDefinitionName": "20cm",
+        "skuPropertyId": 5,
+        "themeVal": "尺寸",
+        "attrVal": "L"
+      }
+    ],
+    "skuCode": ""
+  }
+]
