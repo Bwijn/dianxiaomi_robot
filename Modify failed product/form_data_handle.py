@@ -1,30 +1,30 @@
 import re
 import json
 
-# from processing_product import extract_product_subject, extract_main_image_url, extract_product_id
 import processing_product
+import details_editor
 
-data = """id: 46483711645428674
+data = """
+id: 46483711665250160
 shopId: 2451968
-sourceUrl: https://www.aliexpress.com/item/32859527293.html?algo_pvid=67836406-a652-44f0-a020-1c69d974d8ee&algo_expid=67836406-a652-44f0-a020-1c69d974d8ee-35&btsid=0b86d81616158677257164337e81c5&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
+sourceUrl: https://www.aliexpress.com/item/1005002102203560.html?algo_pvid=136210ee-35ee-42db-9de6-21e62d2529fb&algo_expid=136210ee-35ee-42db-9de6-21e62d2529fb-15&btsid=0b86d80216165658156311347e59e8&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
 categoryId: 200000241
-subject: Three Ratels TZ-1200 17.1*15cm 1-4 pieces border collie on board car sticker  stickers auto decals removable
-aeopAeProductPropertys: [{"attrValueId":201512802,"attrNameId":2},{"attrValueId":9441741844,"attrNameId":219},{"attrValueId":200004814,"attrNameId":200000932},{"attrValueId":200004796,"attrNameId":6},{"attrValueId":31,"attrNameId":200000933},{"attrValueId":201447155,"attrNameId":200009171},{"attrValueId":439,"attrNameId":200000199},{"attrValueId":349907,"attrNameId":200000631},{"attrValueId":201447143,"attrNameId":200009169},{"attrValueId":201447146,"attrNameId":200009170},{"attrValueId":200000692,"attrNameId":200009168},{"attrValue":"Vinly","attrName":"Material Type"},{"attrValue":"Car Stickers","attrName":"Model Name"},{"attrValue":"Stickers and Decals","attrName":"Feature 1"},{"attrValue":"Laptop Sticker","attrName":"Feature 2"},{"attrValue":"Door Sticker","attrName":"Feature 3"},{"attrValue":"Window Sticker","attrName":"Feature 4"},{"attrValue":"Helmet Sticker","attrName":"Feature 5"},{"attrValue":"3D Car Stickers","attrName":"Feature 6"},{"attrValue":"Reflective Stickers","attrName":"Feature 8"},{"attrValue":"Black Silver Silvery","attrName":"Feature 9"},{"attrValue":"Cool and Creative","attrName":"Feature 10"},{"attrValue":"Hood Decals","attrName":"Feature 11"}]
+subject: Funny Car Sticker Paws Up Pitbull Bully Dog Decal KK Vinyl Decor Black/Silver Sunscreen Waterproof 16cmX8cm
+aeopAeProductPropertys: 自定义属性和品牌属性等
 motorIds: 
 groupId: 10000000286948
 groupIds: 10000000286948
-imageURLs: https://ae03.alicdn.com/kf/He15f8581a93a4198be20110f505b0d05p.jpg;https://ae03.alicdn.com/kf/Hfbae4870c2b84e3dbc44e62930015e13S.jpg;https://ae03.alicdn.com/kf/H87de55f1ee1e4420bf748ab3c3179636m.jpg;https://ae03.alicdn.com/kf/Heb7c8d3e3043445d852d804e21982f50O.jpg;https://ae03.alicdn.com/kf/H7333035dfb4d423486ae1304450fbd79K.jpg
+imageURLs: https://ae01.alicdn.com/kf/H205d87aa2a964e8aaaf17c6762cecae5w/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg;https://ae01.alicdn.com/kf/H80635e44c1fd4b61ace0822cda028508f/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg
 productUnit: 100000015
 packageType: 0
 lotNum: 
 bulkOrder: 10
 bulkDiscount: 30
-aeopAeProductSKUs: [{"id":"200000182:193;5:100014064","ipmSkuStock":999,"skuPrice":"2.1","skuStock":true,"aeopSKUProperty":[{"propertyValueId":193,"skuImage":"https://ae03.alicdn.com/kf/He15f8581a93a4198be20110f505b0d05p.jpg","propertyValueDefinitionName":"","skuPropertyId":200000182,"themeVal":"颜色","attrVal":"黑色"},{"propertyValueId":100014064,"propertyValueDefinitionName":"8 cm","skuPropertyId":5,"themeVal":"尺寸","attrVal":"S"}],"skuCode":""},{"id":"200000182:193;5:361386","ipmSkuStock":999,"skuPrice":"2.9","skuStock":true,"aeopSKUProperty":[{"propertyValueId":193,"skuImage":"https://ae03.alicdn.com/kf/He15f8581a93a4198be20110f505b0d05p.jpg","propertyValueDefinitionName":"","skuPropertyId":200000182,"themeVal":"颜色","attrVal":"黑色"},{"propertyValueId":361386,"propertyValueDefinitionName":"12 cm","skuPropertyId":5,"themeVal":"尺寸","attrVal":"M"}],"skuCode":""},{"id":"200000182:193;5:361385","ipmSkuStock":999,"skuPrice":"4.1","skuStock":true,"aeopSKUProperty":[{"propertyValueId":193,"skuImage":"https://ae03.alicdn.com/kf/He15f8581a93a4198be20110f505b0d05p.jpg","propertyValueDefinitionName":"","skuPropertyId":200000182,"themeVal":"颜色","attrVal":"黑色"},{"propertyValueId":361385,"propertyValueDefinitionName":"20 cm","skuPropertyId":5,"themeVal":"尺寸","attrVal":"L"}],"skuCode":""}]
+aeopAeProductSKUs: sku信息
 productPrice: 
 deliveryTime: 7
 wsValidNum: 30
 reduceStrategy: payment_success_deduct
-detail:  
 grossWeight: 0.04
 isPackSell: 0
 baseUnit: 
@@ -35,20 +35,19 @@ packageWidth: 25
 packageHeight: 1
 promiseTemplateId: 0
 freightTemplateId: 730183517
-productMinPrice: 2.1
-productMaxPrice: 4.1
+productMinPrice: 2.9
+productMaxPrice: 4.5
 sizechartId: 
 activity: 
 extraImages: 
 aeopNationalQuoteConfiguration: {}
-op: 1
+op: 2
 isCheck: true
 marketImg1: 
 marketImg2: 
 oldImgUrl: 
 endTime: 
-mobileDetail: 
-dxmScheduleTimeStr: 
+dxmScheduleTimeStr:  
 """
 
 data_dict = {}
@@ -59,11 +58,10 @@ def convert2dictionary(data_str=data) -> dict:
     将字符串转换为字典
     :return: data
     """
-    for line in data_str.splitlines():
-        # print(line)
-        key, value = line.split(': ', 1)
-        if len(key) > 1:
-            # print(line)
+    for line in data_str.split('\n'):
+        temp_list = line.split(': ', 1)
+        if len(temp_list) == 2:
+            key, value = temp_list
             data_dict[key] = value
 
     # add_details_of_mobile()
@@ -80,8 +78,9 @@ def subject_change(subject):
     data_dict['subject'] = subject
 
 
-def color_skus_change(main_images_url="UNKNOWN"):
+def skus_change(main_images_url="UNKNOWN"):
     """
+    修改sku 添加sku小缩略图
     替换 color_name 的选择小图 直接用第一个主图url就可以
     通过正则表达式替换 因为 目标dict是一个字符串 ↓
     "aeopSKUProperty":[{"propertyValueId":193,"skuImage":"xxx","。。。。
@@ -97,17 +96,19 @@ def color_skus_change(main_images_url="UNKNOWN"):
     # 这里读取json文件，修改json
     with open('sku_variant.json', 'r', encoding='utf-8') as f:
         data = json.load(f)
+        f.close()
 
     # 替换thumbnail
     for i, val in enumerate(data):
         val['aeopSKUProperty'][0]['skuImage'] = main_images_url
-        print(val)
-    # print(data)
-    # print(type(data))
+        # print(val)
+    # print("读取的sku的信息",json.dumps(indent=2,obj=data))
 
     # 将 sku 替换为 修改完的 json文件
     data_dict[
-        'aeopAeProductSKUs'] = data
+        'aeopAeProductSKUs'] = json.dumps(indent=2, obj=data)
+
+    # print("sku修改后：：：\n",data)
 
     return None
 
@@ -131,8 +132,6 @@ def source_url_change(source_url):
     data_dict['sourceUrl'] = source_url
 
 
-
-
 def change_pc_details():
     with open("pc_detail.html", "r", encoding="utf-8") as f:  # 打开文件
         text = f.read()  # 读取文件
@@ -154,22 +153,31 @@ def replace_product_all():
     new_xiaomi_id = processing_product.extract_product_id(processing_product.GLOBAL_OBJ_BS4)
     new_source_url = processing_product.extract_source_url(processing_product.GLOBAL_OBJ_BS4)
     # 填充表单字典
-    convert2dictionary(data_str=data)
+    convert2dictionary()
 
     # 然后更换新的
-    subject_change(new_subject)
-    xiaomi_product_id_change(new_xiaomi_id)
+    subject_change(new_subject)  # 换标题
+    xiaomi_product_id_change(new_xiaomi_id)  # 换xiaomi id
     main_images_change(new_main_image)  # 更换主图
-    color_skus_change(new_main_image)  # 更换sku小缩略图 仍使用主图
-    # change_mobile_details(main_images_url=new_main_image)  # 更换手机端details 主图
+    skus_change(new_main_image)  # 更换sku及缩略图 --仍使用主图
+
+    details_editor.MobileEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details 主图
+    details_editor.MobileEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details 主图
+    details_editor.MobileEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
     source_url_change(new_source_url)  # 更换source_url（采集地址）
 
 
-# __all__ = [handle_form]
 if __name__ == '__main__':
-    convert2dictionary(data_str=data)
-    # replace_product_all()
+    # convert2dictionary(data_str=data)
+    # details_editor.MobileEditor.modify_product_propertys(_in_dict=data_dict)
+    # url4='https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250160'
+    # processing_product.res_text(url=url4)
+
+    # processing_product.save_or_publish()
+
     # handle_form()
-    # color_skus_change()
-    change_mobile_details()
-    print("替换如下：\n", data_dict)
+    # skus_change()
+    # change_mobile_details()
+    # details_editor.MobileEditor.change_mobile_details(images_url="yyyyy;", _in_dict=data_dict)
+    skus_change()
+    print("替换如下：\n", )

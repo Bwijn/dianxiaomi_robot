@@ -1,10 +1,11 @@
+import json
 import os
 import re
 
 import requests
 from bs4 import BeautifulSoup
 
-from header import handle_headers
+import header
 
 # from form_data_handle import data_dict, replace_product_all
 import form_data_handle
@@ -14,26 +15,29 @@ os.environ['NO_PROXY'] = '1'  # 跳过系统代理
 SAVE_OR_PUBLISH_URL = "https://www.dianxiaomi.com/smtProduct/add.json"
 
 # 请求单个详情页的解析后的bs4对象
-GLOBAL_OBJ_BS4 = None
+GLOBAL_OBJ_BS4 = ''
 GLOBAL_DETAIL_TEXT = ""
 
 
-def res_text(url='https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711645428674'):
+def res_text(url):
     """
     返回静态页面html
     :param url:
     :return:
     """
-    headers = handle_headers()
-    resp = requests.get(headers=headers, url=url, )
-    print("获取详情页 状态码: [%d]" % resp.status_code)
+    header_dict = header.handle_headers(header_str=header.get_item_edit_page_header)
+    # print("RES_TEXT 内部 url为：%s\ndict: %s" % (url, header_dict))
 
-    # return BeautifulSoup(resp.text, 'lxml')
-    soup = BeautifulSoup(resp.text, "lxml")
+    resp = requests.get(headers=header_dict, url=url)
+    print(resp.text)
+    print("获取详情页 状态码: [%d]" % resp.status_code)
 
     global GLOBAL_OBJ_BS4, GLOBAL_DETAIL_TEXT
 
-    GLOBAL_DETAIL_TEXT = resp.text
+
+    soup = BeautifulSoup(resp.text, "lxml")
+
+    # GLOBAL_DETAIL_TEXT = resp.text
     GLOBAL_OBJ_BS4 = soup
 
     # 测试时使用的，不用再去请求了，直接读取文件
@@ -117,33 +121,29 @@ def save_or_publish(url=SAVE_OR_PUBLISH_URL):
     :param url:
     :return: res.text 返回给控制台 要监控的!!!
     """
-    headers = handle_headers()  # 更新请求头
+    headers = header.handle_headers(header_str=header.save_or_publish_header)  # 更新请求头
 
     form_data_handle.replace_product_all()  # 更新请求表单
-    data = form_data_handle.data_dict
+    tem_data = form_data_handle.data_dict
 
-    resp = requests.post(headers=headers, data=data, url=SAVE_OR_PUBLISH_URL, )
+    resp = requests.post(headers=headers, data=tem_data, url=SAVE_OR_PUBLISH_URL, )
     print("发布状态码：", resp.status_code)
     print("发布结果：\n", resp.text)
     return True
 
 
 if __name__ == '__main__':
-    # save_or_publish(url=SAVE_OR_PUBLISH_URL)
-    # res_text()
-    # print(type(GLOBAL_OBJ_BS4))
-    # extract_source_url(GLOBAL_OBJ_BS4)
-    # extract_main_image_url('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711626580416')
-    # extract_product_subject('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711626580416')
-    # extract_product_id()
 
-    with open("product_edit_page.txt", mode='r', encoding='utf-8')as f:
-        text = f.read()
+    res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250168')
 
-    pattern = re.compile(r"var imageURLs = (.*),")
-
-    new_bs4_obj = BeautifulSoup(text, 'lxml')
-    print(new_bs4_obj.find(text=pattern))
-
-    extract_main_image_url(new_bs4_obj)
-    pass
+    #
+    # with open("product_edit_page.txt", mode='r', encoding='utf-8')as f:
+    #     text = f.read()
+    #
+    # pattern = re.compile(r"var imageURLs = (.*),")
+    #
+    # new_bs4_obj = BeautifulSoup(text, 'lxml')
+    # print(new_bs4_obj.find(text=pattern))
+    #
+    # extract_main_image_url(new_bs4_obj)
+    # pass
