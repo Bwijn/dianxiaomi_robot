@@ -32,7 +32,7 @@ def find_item_url(bs4_obj=request_fun.RequestPro.get_list_page()):
         # todo 这里之后设置成yield 生成器 解耦合
         # 分别请求处理
         request_fun.RequestPro.res_text(url=full_url)
-        request_fun.RequestPro.save_or_publish()
+        # request_fun.RequestPro.save_or_publish()
         # sleep(3)
         break
 

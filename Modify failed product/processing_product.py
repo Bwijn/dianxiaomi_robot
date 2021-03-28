@@ -14,11 +14,6 @@ import form_data_handle
 os.environ['NO_PROXY'] = '1'  # 跳过系统代理
 
 
-# 请求单个详情页的解析后的bs4对象
-# GLOBAL_OBJ_BS4 = ''
-# GLOBAL_DETAIL_TEXT = ""
-
-
 def extract_main_image_url(bs4_obj):
     """
     抽取 url <script> 标签中的 主图 地址 也可用于单个Color skus 的图片 eg: 黑色

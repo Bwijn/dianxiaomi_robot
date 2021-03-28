@@ -9,9 +9,6 @@
 import json
 
 
-# from time import sleep
-
-
 class DetailEditor(object):
     # def __init__(self,):
 

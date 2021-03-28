@@ -1,77 +1,24 @@
 import re
 import json
+import utils
 
 import processing_product
 import details_editor
 import request_fun
 
-data = """
-id: 46483711665250160
-shopId: 2499851
-sourceUrl: https://www.aliexpress.com/item/1005002102203560.html?algo_pvid=136210ee-35ee-42db-9de6-21e62d2529fb&algo_expid=136210ee-35ee-42db-9de6-21e62d2529fb-15&btsid=0b86d80216165658156311347e59e8&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
-categoryId: 200000241
-subject: Funny Car Sticker Paws Up Pitbull Bully Dog Decal KK Vinyl Decor Black/Silver Sunscreen Waterproof 16cmX8cm
-aeopAeProductPropertys: 自定义属性和品牌属性等
-motorIds: 
-groupId: 
-groupIds: 
-imageURLs: https://ae01.alicdn.com/kf/H205d87aa2a964e8aaaf17c6762cecae5w/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg;https://ae01.alicdn.com/kf/H80635e44c1fd4b61ace0822cda028508f/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg
-productUnit: 100000015
-packageType: 0
-lotNum: 
-bulkOrder: 10
-bulkDiscount: 30
-aeopAeProductSKUs: sku信息
-productPrice: 
-deliveryTime: 7
-wsValidNum: 30
-reduceStrategy: payment_success_deduct
-grossWeight: 0.04
-isPackSell: 0
-baseUnit: 
-addUnit: 
-addWeight: 
-packageLength: 25
-packageWidth: 25
-packageHeight: 1
-promiseTemplateId: 0
-freightTemplateId: 729734421
-productMinPrice: 2.9
-productMaxPrice: 4.5
-sizechartId: 
-activity: 
-extraImages: 
-aeopNationalQuoteConfiguration: {}
-op: 2
-isCheck: true
-marketImg1: 
-marketImg2: 
-oldImgUrl: 
-endTime: 
-dxmScheduleTimeStr:  
-"""
-
-data_dict = {}
-
-
-def convert2dictionary(data_str=data) -> dict:
-    """
-    将字符串转换为字典
-    :return: data
-    """
-    for line in data_str.split('\n'):
-        temp_list = line.split(': ', 1)
-        if len(temp_list) == 2:
-            key, value = temp_list
-            data_dict[key] = value
-
-    # add_details_of_mobile()
-
-    return data_dict
+# 这里读取json文件，修改json
+with open('../formdata/post_form.txt', 'r', encoding='utf-8') as f:
+    data_dict = f.read()
+    data_dict = utils.handle_headers(data_dict)  # 转换为字典
+    # print(json.dumps(data_dict, indent=4, ensure_ascii=False))
+    # print(data_dict)
+    # exit(1131)
+    f.close()
 
 
 def main_images_change(image_urls):
     # print(data_dict.items())
+    image_urls=image_urls.strip("'").split(';')[0]
     data_dict['imageURLs'] = image_urls
 
 
@@ -133,15 +80,6 @@ def source_url_change(source_url):
     data_dict['sourceUrl'] = source_url
 
 
-def change_pc_details():
-    with open("pc_detail.html", "r", encoding="utf-8") as f:  # 打开文件
-        text = f.read()  # 读取文件
-        # print(data)
-        f.close()
-
-    data_dict['detail'] = text
-
-
 def replace_product_all():
     """
     替换新的 subject、sku_image、price、xiaomi_id、
@@ -153,8 +91,6 @@ def replace_product_all():
     new_main_image = processing_product.extract_main_image_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_xiaomi_id = processing_product.extract_product_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_source_url = processing_product.extract_source_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
-    # 填充表单字典
-    convert2dictionary()
 
     # 然后更换新的
     subject_change(new_subject)  # 换标题
@@ -169,5 +105,4 @@ def replace_product_all():
 
 
 if __name__ == '__main__':
-    convert2dictionary(data_str=data)
-    print(data_dict)
+    pass

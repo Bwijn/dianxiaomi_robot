@@ -33,8 +33,8 @@ class RequestPro(object):
         # temp_header = header.handle_headers(header_str=header.get_product_list_header)
 
         headers = Header('get_product_list_header')  # 更新请求头
-        headers = headers.handle_headers(headers.header_str)
-        resp = requests.post(headers=headers, data=form_data, url=cls.Pending_URL)
+
+        resp = requests.post(headers=headers.dict, data=form_data, url=cls.Pending_URL)
 
         # print("发布结果：\n", resp.text)
         # print("发布状态码：", resp.status_code)
@@ -53,12 +53,12 @@ class RequestPro(object):
         # headers = header.handle_headers(header_str=header.save_or_publish_header)
 
         headers = Header('save_or_publish_header')  # 更新请求头
-        headers = headers.handle_headers(headers.header_str)
+
 
         form_data_handle.replace_product_all()  # 更新请求表单
         tem_data = form_data_handle.data_dict
 
-        resp = requests.post(headers=headers, data=tem_data, url=cls.SAVE_OR_PUBLISH_URL, )
+        resp = requests.post(headers=headers.dict, data=tem_data, url=cls.SAVE_OR_PUBLISH_URL, )
         print("发布状态码：", resp.status_code)
         print("发布结果：\n", resp.text)
         return True
@@ -74,9 +74,8 @@ class RequestPro(object):
         # header_dict = header.handle_headers(header_str=header.get_item_edit_page_header)
 
         headers = Header('get_item_edit_page_header')  # 更新请求头
-        headers = headers.handle_headers(headers.header_str)
 
-        resp = requests.get(headers=headers, url=url)
+        resp = requests.get(headers=headers.dict, url=url)
         print(resp.text)
         print("获取详情页 状态码: [%d]" % resp.status_code)
 
