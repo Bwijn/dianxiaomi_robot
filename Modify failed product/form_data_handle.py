@@ -3,17 +3,18 @@ import json
 
 import processing_product
 import details_editor
+import request_fun
 
 data = """
 id: 46483711665250160
-shopId: 2451968
+shopId: 2499851
 sourceUrl: https://www.aliexpress.com/item/1005002102203560.html?algo_pvid=136210ee-35ee-42db-9de6-21e62d2529fb&algo_expid=136210ee-35ee-42db-9de6-21e62d2529fb-15&btsid=0b86d80216165658156311347e59e8&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
 categoryId: 200000241
 subject: Funny Car Sticker Paws Up Pitbull Bully Dog Decal KK Vinyl Decor Black/Silver Sunscreen Waterproof 16cmX8cm
 aeopAeProductPropertys: 自定义属性和品牌属性等
 motorIds: 
-groupId: 10000000286948
-groupIds: 10000000286948
+groupId: 
+groupIds: 
 imageURLs: https://ae01.alicdn.com/kf/H205d87aa2a964e8aaaf17c6762cecae5w/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg;https://ae01.alicdn.com/kf/H80635e44c1fd4b61ace0822cda028508f/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg
 productUnit: 100000015
 packageType: 0
@@ -34,7 +35,7 @@ packageLength: 25
 packageWidth: 25
 packageHeight: 1
 promiseTemplateId: 0
-freightTemplateId: 730183517
+freightTemplateId: 729734421
 productMinPrice: 2.9
 productMaxPrice: 4.5
 sizechartId: 
@@ -148,10 +149,10 @@ def replace_product_all():
     """
 
     # 打开每一个详情页获取里面新的 subject、sku_image、price、xiaomi_id、
-    new_subject = processing_product.extract_product_subject(processing_product.GLOBAL_OBJ_BS4)
-    new_main_image = processing_product.extract_main_image_url(processing_product.GLOBAL_OBJ_BS4)
-    new_xiaomi_id = processing_product.extract_product_id(processing_product.GLOBAL_OBJ_BS4)
-    new_source_url = processing_product.extract_source_url(processing_product.GLOBAL_OBJ_BS4)
+    new_subject = processing_product.extract_product_subject(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    new_main_image = processing_product.extract_main_image_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    new_xiaomi_id = processing_product.extract_product_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    new_source_url = processing_product.extract_source_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     # 填充表单字典
     convert2dictionary()
 
@@ -161,23 +162,12 @@ def replace_product_all():
     main_images_change(new_main_image)  # 更换主图
     skus_change(new_main_image)  # 更换sku及缩略图 --仍使用主图
 
-    details_editor.MobileEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details 主图
-    details_editor.MobileEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details 主图
-    details_editor.MobileEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
+    details_editor.DetailEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details 主图
+    details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details 主图
+    details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
     source_url_change(new_source_url)  # 更换source_url（采集地址）
 
 
 if __name__ == '__main__':
-    # convert2dictionary(data_str=data)
-    # details_editor.MobileEditor.modify_product_propertys(_in_dict=data_dict)
-    # url4='https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250160'
-    # processing_product.res_text(url=url4)
-
-    # processing_product.save_or_publish()
-
-    # handle_form()
-    # skus_change()
-    # change_mobile_details()
-    # details_editor.MobileEditor.change_mobile_details(images_url="yyyyy;", _in_dict=data_dict)
-    skus_change()
-    print("替换如下：\n", )
+    convert2dictionary(data_str=data)
+    print(data_dict)

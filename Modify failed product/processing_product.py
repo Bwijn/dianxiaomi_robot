@@ -7,44 +7,16 @@ from bs4 import BeautifulSoup
 
 import header
 
+import request_fun
 # from form_data_handle import data_dict, replace_product_all
 import form_data_handle
 
 os.environ['NO_PROXY'] = '1'  # 跳过系统代理
 
-SAVE_OR_PUBLISH_URL = "https://www.dianxiaomi.com/smtProduct/add.json"
 
 # 请求单个详情页的解析后的bs4对象
-GLOBAL_OBJ_BS4 = ''
-GLOBAL_DETAIL_TEXT = ""
-
-
-def res_text(url):
-    """
-    返回静态页面html
-    :param url:
-    :return:
-    """
-    header_dict = header.handle_headers(header_str=header.get_item_edit_page_header)
-    # print("RES_TEXT 内部 url为：%s\ndict: %s" % (url, header_dict))
-
-    resp = requests.get(headers=header_dict, url=url)
-    print(resp.text)
-    print("获取详情页 状态码: [%d]" % resp.status_code)
-
-    global GLOBAL_OBJ_BS4, GLOBAL_DETAIL_TEXT
-
-
-    soup = BeautifulSoup(resp.text, "lxml")
-
-    # GLOBAL_DETAIL_TEXT = resp.text
-    GLOBAL_OBJ_BS4 = soup
-
-    # 测试时使用的，不用再去请求了，直接读取文件
-    # with open("product_edit_page.txt", "r", encoding="utf-8") as f:  # 打开文件
-    #     text = f.read()  # 读取文件
-    #     # print(data)
-    #     f.close()
+# GLOBAL_OBJ_BS4 = ''
+# GLOBAL_DETAIL_TEXT = ""
 
 
 def extract_main_image_url(bs4_obj):
@@ -82,7 +54,9 @@ def extract_product_subject(bs4_obj) -> str:
     subject = bs4_obj.attrs['value']
 
     print("抽取到新的 subject:\n", subject)
-    return subject
+
+    # 标题长度限制128
+    return subject[:128]
 
 
 def extract_product_id(bs4_obj) -> str:
@@ -95,6 +69,44 @@ def extract_product_id(bs4_obj) -> str:
     print("抽取到新的 id:\n", xiaomi_id)
 
     return xiaomi_id
+
+
+def extract_shop_id(bs4_obj):
+    pattern = re.compile(r"var shopId = (.*),")
+
+    shopid = bs4_obj.find(text=pattern)
+    shopid = pattern.search(shopid).group(1)
+
+    # print(shopid)
+    return shopid
+    # bs4_obj = bs4_obj.find()
+
+
+def extract_groupId_groupIds(bs4_obj):
+    groupId = bs4_obj.find('input', id="groupId").attrs['value']
+    groupIds = bs4_obj.find('input', id="groupIds").attrs['value']
+
+    # groupId = groupId
+
+    print(groupId, groupIds)
+    return groupId, groupIds
+    # bs4_obj = bs4_obj.find()
+
+
+def extract_freightTemplateId(bs4_obj):
+    """
+    todo 运费模板 待实现 异步获取 edit page 没有找到 freightTemplateId
+
+    :param bs4_obj:
+    :return:
+    """
+    pattern = re.compile(r"freightTemplateId = '(.*)',")
+
+    freightTemplateId = bs4_obj.find(text=pattern)
+    freightTemplateId = pattern.search(freightTemplateId).group(1)
+
+    print(freightTemplateId)
+    return freightTemplateId
 
 
 def extract_source_url(bs4_obj):
@@ -113,37 +125,10 @@ def extract_source_url(bs4_obj):
     return source_url
 
 
-def save_or_publish(url=SAVE_OR_PUBLISH_URL):
-    """
-    保存产品 或 发布产品
-    请求 url GET https://www.dianxiaomi.com/smtProduct/add.json 发送表单
-    data字典里面 op =1 保存 =2 发布
-    :param url:
-    :return: res.text 返回给控制台 要监控的!!!
-    """
-    headers = header.handle_headers(header_str=header.save_or_publish_header)  # 更新请求头
-
-    form_data_handle.replace_product_all()  # 更新请求表单
-    tem_data = form_data_handle.data_dict
-
-    resp = requests.post(headers=headers, data=tem_data, url=SAVE_OR_PUBLISH_URL, )
-    print("发布状态码：", resp.status_code)
-    print("发布结果：\n", resp.text)
-    return True
-
-
 if __name__ == '__main__':
-
-    res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250168')
-
-    #
-    # with open("product_edit_page.txt", mode='r', encoding='utf-8')as f:
-    #     text = f.read()
-    #
-    # pattern = re.compile(r"var imageURLs = (.*),")
-    #
-    # new_bs4_obj = BeautifulSoup(text, 'lxml')
-    # print(new_bs4_obj.find(text=pattern))
-    #
-    # extract_main_image_url(new_bs4_obj)
-    # pass
+    rettt = request_fun.RequestPro.res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711671298364')
+    extract_shop_id(bs4_obj=rettt)
+    extract_main_image_url(rettt)
+    extract_groupId_groupIds(rettt)
+    extract_freightTemplateId(rettt)
+    # res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250168')

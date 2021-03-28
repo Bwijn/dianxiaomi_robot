@@ -12,17 +12,17 @@ import json
 # from time import sleep
 
 
-class MobileEditor(object):
+class DetailEditor(object):
     # def __init__(self,):
 
-    with open("product_propertys.json", "r", encoding="utf-8") as f:  # 打开文件
+    with open("../json_cof/product_propertys.json", "r", encoding="utf-8") as f:  # 打开文件
         product_propertys = json.load(f)  # 读取文件
         f.close()
     with open("pc_detail.html", "r", encoding="utf-8") as f:  # 打开文件
         pc_text = f.read()  # 读取文件
         f.close()
 
-    with open("mobile_details.json", "r", encoding="utf-8") as f:  # 打开文件
+    with open("../json_cof/mobile_details.json", "r", encoding="utf-8") as f:  # 打开文件
         text = json.load(f)  # 读取文件
         f.close()
 
@@ -57,7 +57,7 @@ class MobileEditor(object):
         cls.text['moduleList'][1]["images"][0]['url'] = images_url  # 替换手机details主图
         _in_dict['mobileDetail'] = json.dumps(cls.text)
         # print("修改后的手机端json: ", cls.text)
-        # print("修改后的手机端json: ", _in_dict)
+        print("修改后的手机端json: ", _in_dict)
 
     @classmethod
     def pc_details(cls, _in_dict, images_url="unk;"):
@@ -79,5 +79,5 @@ class MobileEditor(object):
 if __name__ == '__main__':
     test_url2 = "YYYYYYY;IIIIII;OOOOOOO"
     test_url = "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1m3AEd1uSBuNjy1Xcq6AYjFXaJ/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1zZina5QnBKNjSZFmq6AApVXaA/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1hj.Gd25TBuNjSspmq6yDRVXaH/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1CvCiaZuYBuNkSmRyq6AA3pXa4/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1ge.gdYGYBuNjy0Foq6AiBFXaK/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg"
-    MobileEditor.change_mobile_details(images_url=test_url2, _in_dict={'mobileDetail': 1})
-    # print(type(MobileEditor.editor()))
+    DetailEditor.change_mobile_details(images_url=test_url2, _in_dict={'mobileDetail': 1})
+    # print(type(DetailEditor.editor()))

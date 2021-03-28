@@ -1,8 +1,8 @@
 [
   {
     "id": "200000182:193;5:100014064",
-    "ipmSkuStock": 999,
-    "skuPrice": "2.3",
+    "ipmSkuStock": 9999,
+    "skuPrice": "4",
     "skuStock": true,
     "aeopSKUProperty": [
       {
@@ -15,7 +15,7 @@
       },
       {
         "propertyValueId": 100014064,
-        "propertyValueDefinitionName": "8 cm",
+        "propertyValueDefinitionName": "10 cm",
         "skuPropertyId": 5,
         "themeVal": "尺寸",
         "attrVal": "S"
@@ -25,8 +25,8 @@
   },
   {
     "id": "200000182:193;5:361386",
-    "ipmSkuStock": 999,
-    "skuPrice": "3.1",
+    "ipmSkuStock": 9999,
+    "skuPrice": "6.5",
     "skuStock": true,
     "aeopSKUProperty": [
       {
@@ -39,7 +39,7 @@
       },
       {
         "propertyValueId": 361386,
-        "propertyValueDefinitionName": "12cm",
+        "propertyValueDefinitionName": "17cm",
         "skuPropertyId": 5,
         "themeVal": "尺寸",
         "attrVal": "M"
@@ -49,8 +49,8 @@
   },
   {
     "id": "200000182:193;5:361385",
-    "ipmSkuStock": 999,
-    "skuPrice": "4.5",
+    "ipmSkuStock": 9999,
+    "skuPrice": "12.4",
     "skuStock": true,
     "aeopSKUProperty": [
       {
@@ -63,7 +63,7 @@
       },
       {
         "propertyValueId": 361385,
-        "propertyValueDefinitionName": "20cm",
+        "propertyValueDefinitionName": "25cm",
         "skuPropertyId": 5,
         "themeVal": "尺寸",
         "attrVal": "L"
