@@ -4,12 +4,11 @@ import re
 
 import requests
 from bs4 import BeautifulSoup
+from icecream import ic
 
 import header
 
 import request_fun
-# from form_data_handle import data_dict, replace_product_all
-import form_data_handle
 
 os.environ['NO_PROXY'] = '1'  # 跳过系统代理
 
@@ -31,8 +30,6 @@ def extract_main_image_url(bs4_obj):
     main_images_list = bs4_obj.find(text=pattern)
     main_images_list = pattern.search(main_images_list).group(1).strip("'")
 
-    print("抽取到新的 main_images:\n", main_images_list)
-
     return main_images_list
 
 
@@ -48,8 +45,6 @@ def extract_product_subject(bs4_obj) -> str:
     # 找到标题
     subject = bs4_obj.attrs['value']
 
-    print("抽取到新的 subject:\n", subject)
-
     # 标题长度限制128
     return subject[:128]
 
@@ -61,8 +56,6 @@ def extract_product_id(bs4_obj) -> str:
     # 找到id
     xiaomi_id = bs4_obj.attrs['value']
 
-    print("抽取到新的 id:\n", xiaomi_id)
-
     return xiaomi_id
 
 
@@ -72,18 +65,13 @@ def extract_shop_id(bs4_obj):
     shopid = bs4_obj.find(text=pattern)
     shopid = pattern.search(shopid).group(1)
 
-    # print(shopid)
     return shopid
-    # bs4_obj = bs4_obj.find()
 
 
 def extract_groupId_groupIds(bs4_obj):
     groupId = bs4_obj.find('input', id="groupId").attrs['value']
     groupIds = bs4_obj.find('input', id="groupIds").attrs['value']
 
-    # groupId = groupId
-
-    print(groupId, groupIds)
     return groupId, groupIds
     # bs4_obj = bs4_obj.find()
 
@@ -100,7 +88,6 @@ def extract_freightTemplateId(bs4_obj):
     freightTemplateId = bs4_obj.find(text=pattern)
     freightTemplateId = pattern.search(freightTemplateId).group(1)
 
-    print(freightTemplateId)
     return freightTemplateId
 
 
@@ -112,18 +99,33 @@ def extract_source_url(bs4_obj):
     """
     bs4_obj = bs4_obj.find("input", id="sourceUrl11")  # 找到这个标签的特征
 
-    # print(bs4_obj)
-    print("来源url：", bs4_obj.attrs['value'])
     # 找到id
     source_url = bs4_obj.attrs['value']
 
     return source_url
 
 
+def extract_sku_info(bs4_obj):
+    bs4_obj = bs4_obj.find("input", id="aeopAeProductSKUs")  # 找到这个标签的特征
+    sku_info = bs4_obj.attrs['value']
+
+    # print(sku_info)
+    # print(type(sku_info))
+    return sku_info
+
+
 if __name__ == '__main__':
-    rettt = request_fun.RequestPro.res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711671298364')
-    extract_shop_id(bs4_obj=rettt)
-    extract_main_image_url(rettt)
-    extract_groupId_groupIds(rettt)
-    extract_freightTemplateId(rettt)
+    t_url = 'https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711671298366'
+    rettt = request_fun.RequestPro.res_text(t_url)
+
+    sku_string = extract_sku_info(rettt)
+    # 测试正则替换
+    pattern = re.compile(r"(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+
+    ic(pattern.findall(string=sku_string))
+
+    # extract_shop_id(bs4_obj=rettt)
+    # extract_main_image_url(rettt)
+    # extract_groupId_groupIds(rettt)
+    # extract_freightTemplateId(rettt)
     # res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250168')

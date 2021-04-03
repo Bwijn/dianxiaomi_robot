@@ -8,6 +8,7 @@ import re
 from time import sleep
 
 import request_fun
+
 os.environ['NO_PROXY'] = '1'  # 跳过系统代理
 
 
@@ -32,7 +33,7 @@ def find_item_url(bs4_obj=request_fun.RequestPro.get_list_page()):
         # todo 这里之后设置成yield 生成器 解耦合
         # 分别请求处理
         request_fun.RequestPro.res_text(url=full_url)
-        # request_fun.RequestPro.save_or_publish()
+        request_fun.RequestPro.save_or_publish()
         # sleep(3)
         break
 

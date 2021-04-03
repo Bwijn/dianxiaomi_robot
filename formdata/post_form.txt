@@ -1,24 +1,25 @@
-id: 46483711665250160
-shopId: 2499851
-sourceUrl: https://www.aliexpress.com/item/1005002102203560.html?algo_pvid=136210ee-35ee-42db-9de6-21e62d2529fb&algo_expid=136210ee-35ee-42db-9de6-21e62d2529fb-15&btsid=0b86d80216165658156311347e59e8&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
+id: 46483711676706822
+shopId: 2451968
+sourceUrl: https://www.aliexpress.com/item/1005002106101205.html?spm=a2g0o.productlist.0.0.241ab6d5I9MSMa&algo_pvid=993f442f-f786-4138-a550-7afd2f96d883&algo_expid=993f442f-f786-4138-a550-7afd2f96d883-46&btsid=0b01114516169947505495850e4ecf&ws_ab_test=searchweb0_0,searchweb201602_,searchweb201603_
 categoryId: 200000241
-subject: Funny Car Sticker Paws Up Pitbull Bully Dog Decal KK Vinyl Decor Black/Silver Sunscreen Waterproof 16cmX8cm
-aeopAeProductPropertys: 自定义属性和品牌属性等
+subject: NetCat /KIDS Baby ON BOARD car decals/water proof/car window body/NOT PRINT/Funny Vinyl Car Sticker Decal/reflective
+aeopAeProductPropertys: [{"attrValueId":201512802,"attrNameId":2},{"attrValueId":9441741844,"attrNameId":219},{"attrValueId":200004814,"attrNameId":200000932},{"attrValueId":200004796,"attrNameId":6},{"attrValueId":976,"attrNameId":200000933},{"attrValueId":201447155,"attrNameId":200009171},{"attrValueId":439,"attrNameId":200000199},{"attrValueId":349907,"attrNameId":200000631},{"attrValueId":201447143,"attrNameId":200009169},{"attrValueId":201447146,"attrNameId":200009170},{"attrValueId":200000692,"attrNameId":200009168},{"attrValue":"Vinly","attrName":"Material Type"},{"attrValue":"Car Stickers","attrName":"Model Name"},{"attrValue":"Stickers and Decals","attrName":"Feature 1"},{"attrValue":"Laptop Sticker","attrName":"Feature 2"},{"attrValue":"Door Sticker","attrName":"Feature 3"},{"attrValue":"Window Sticker","attrName":"Feature 4"},{"attrValue":"Helmet Sticker","attrName":"Feature 5"},{"attrValue":"3D Car Stickers","attrName":"Feature 6"},{"attrValue":"Reflective Stickers","attrName":"Feature 8"},{"attrValue":"Black Silver Silvery","attrName":"Feature 9"},{"attrValue":"Cool and Creative","attrName":"Feature 10"},{"attrValue":"Hood Decals","attrName":"Feature 11"}]
 motorIds:
-groupId:
-groupIds:
-imageURLs: https://ae01.alicdn.com/kf/H205d87aa2a964e8aaaf17c6762cecae5w/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg;https://ae01.alicdn.com/kf/H80635e44c1fd4b61ace0822cda028508f/Funny-Car-Sticker-Paws-Up-Pitbull-Bully-Dog-Decal-KK-Vinyl-Decor-Black-Silver-Sunscreen-Waterproof.jpg
+groupId: 10000000286948
+groupIds: 10000000286948
+imageURLs: https://ae01.alicdn.com/kf/H0ffc865a6132447da40b1b905eaab862Q/NetCat-KIDS-Baby-ON-BOARD-car-decals-water-proof-car-window-body-NOT-PRINT-Funny-Vinyl.jpg
 productUnit: 100000015
 packageType: 0
 lotNum:
-bulkOrder: 10
-bulkDiscount: 30
-aeopAeProductSKUs: sku信息
+bulkOrder:
+bulkDiscount:
+aeopAeProductSKUs: [{"id":"200000182:193","ipmSkuStock":999,"skuPrice":"9","skuStock":true,"aeopSKUProperty":[{"propertyValueId":193,"skuImage":"","propertyValueDefinitionName":"style A","skuPropertyId":200000182,"themeVal":"颜色","attrVal":"黑色"}],"skuCode":""}]
 productPrice:
 deliveryTime: 7
 wsValidNum: 30
 reduceStrategy: payment_success_deduct
-grossWeight: 0.04
+detail:
+grossWeight: 0.02
 isPackSell: 0
 baseUnit:
 addUnit:
@@ -27,14 +28,14 @@ packageLength: 25
 packageWidth: 25
 packageHeight: 1
 promiseTemplateId: 0
-freightTemplateId: 729734421
-productMinPrice: 2.9
-productMaxPrice: 4.5
+freightTemplateId: 730183517
+productMinPrice: 9
+productMaxPrice: 9
 sizechartId:
 activity:
 extraImages:
 aeopNationalQuoteConfiguration: {}
-op: 2
+op: 1
 isCheck: true
 marketImg1:
 marketImg2:

@@ -1,5 +1,13 @@
+"""
+这个模块将一个form表单作为模板 然后在其基础上进行修改
+"""
 import re
 import json
+
+from bs4 import BeautifulSoup
+from icecream import ic
+
+import sku_creator
 import utils
 
 import processing_product
@@ -17,8 +25,13 @@ with open('../formdata/post_form.txt', 'r', encoding='utf-8') as f:
 
 
 def main_images_change(image_urls):
+    """
+    只放一个主图 因为其他主图中可能有其他品牌和地域信息
+    :param image_urls:
+    :return:
+    """
     # print(data_dict.items())
-    image_urls=image_urls.strip("'").split(';')[0]
+    image_urls = image_urls.strip("'").split(';')[0]
     data_dict['imageURLs'] = image_urls
 
 
@@ -80,29 +93,50 @@ def source_url_change(source_url):
     data_dict['sourceUrl'] = source_url
 
 
+def shop_id_change(shopid):
+    """
+
+    :param source_url:
+    :return:
+    """
+    data_dict['shopId'] = shopid
+
+
 def replace_product_all():
     """
     替换新的 subject、sku_image、price、xiaomi_id、
     :return:
     """
 
-    # 打开每一个详情页获取里面新的 subject、sku_image、price、xiaomi_id、
+    # 提取采集的产品的 各种信息 eg: 标题、来源url、主图url
     new_subject = processing_product.extract_product_subject(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_main_image = processing_product.extract_main_image_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_xiaomi_id = processing_product.extract_product_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_source_url = processing_product.extract_source_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    new_shop_id = processing_product.extract_shop_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    new_sku_info = processing_product.extract_sku_info(request_fun.RequestPro.GLOBAL_OBJ_BS4)
 
-    # 然后更换新的
+    print("new_subject:{}\n"
+       "new_main_image:{}\n"
+       "new_xiaomi_id:{}\n"
+       "new_source_url:{}\n"
+       "new_shop_id:{}\n"
+       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
+                                  new_sku_info))
+    # 然后更换新的属性 ------------------------------------------------------------------------------
     subject_change(new_subject)  # 换标题
-    xiaomi_product_id_change(new_xiaomi_id)  # 换xiaomi id
+    xiaomi_product_id_change(new_xiaomi_id)  # 换店小蜜专有id
     main_images_change(new_main_image)  # 更换主图
-    skus_change(new_main_image)  # 更换sku及缩略图 --仍使用主图
+    # 更换sku及缩略图 --仍使用主图
+    sku_creator.sku_handle(sku_info=new_sku_info, )
 
-    details_editor.DetailEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details 主图
-    details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details 主图
+    #
+    # shop_id_change(new_shop_id)  # 更换shopid
+    details_editor.DetailEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details和主图
+    details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details和主图
     details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
     source_url_change(new_source_url)  # 更换source_url（采集地址）
 
 
 if __name__ == '__main__':
-    pass
+    print(json.dumps(data_dict, indent=4, ensure_ascii=False))
