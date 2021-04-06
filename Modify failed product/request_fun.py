@@ -6,13 +6,14 @@ import form_data_handle
 
 from header import Header
 
+from init_config import kang as k
+
 
 class RequestPro(object):
     """
     Pro 有 process / professional 的意思😘
     """
-    # 获取待上货的列表
-    Pending_URL = "https://www.dianxiaomi.com/smtProduct/list.htm"
+
     # Pending_URL = "https://www.dianxiaomi.com/smtProduct/offline.htm?dxmState=offline&dxmOfflineState=publishFail&shopId=-1"
 
     # add.json 保存或上货的api
@@ -22,27 +23,24 @@ class RequestPro(object):
     GLOBAL_OBJ_BS4 = None
 
     @classmethod
-    def get_list_page(cls, url=Pending_URL):
+    def get_list_page(cls, url=k.get("product_list")):
         """
-        自动获取待发布列表
+        获取待发布列表
         :return:
         """
-        form_data = {
-            "shopId": '-1',  # -1全部店铺 如果写上详细的就是分店
-            "groupId": '0',
-            "productStatusType": "",
-            "dxmState": "offline",
-            "dxmOfflineState": "waitPublish",
-        }
-
-        # temp_header = header.handle_headers(header_str=header.get_product_list_header)
 
         headers = Header('get_product_list_header')  # 更新请求头
 
-        resp = requests.post(headers=headers.dict, data=form_data, url=cls.Pending_URL)
+        if url.find("list.htm") != -1:
+            resp = requests.post(headers=headers.dict, data=k.get("To be released_form_data"),
+                                 url=url)
 
-        print("请求list结果：\n", resp.text)
-        print("请求list状态码：", resp.status_code)
+        else:
+            resp = requests.get(headers=headers.dict, data=k.get("To be released_form_data"),
+                                url=url)
+
+        # print("请求list结果：\n", resp.text)
+        # print("请求list状态码：", resp.status_code)
         soup = BeautifulSoup(resp.text, "lxml")
         return soup
 

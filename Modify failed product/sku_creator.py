@@ -1,3 +1,8 @@
+"""
+根据缩略图的个数来填充sku 没有color 缩略图，则
+style A .................
+"""
+
 import form_data_handle
 import json
 import utils

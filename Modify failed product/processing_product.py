@@ -111,8 +111,6 @@ def extract_sku_info(bs4_obj):
 
     sku_info = json.loads(sku_info)
 
-    ic(sku_info)
-    # print(type(sku_info))
     return sku_info
 
 
