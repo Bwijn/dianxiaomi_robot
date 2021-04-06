@@ -116,21 +116,22 @@ def replace_product_all():
     new_shop_id = processing_product.extract_shop_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_sku_info = processing_product.extract_sku_info(request_fun.RequestPro.GLOBAL_OBJ_BS4)
 
-    print("new_subject:{}\n"
-       "new_main_image:{}\n"
-       "new_xiaomi_id:{}\n"
-       "new_source_url:{}\n"
-       "new_shop_id:{}\n"
-       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
-                                  new_sku_info))
+    # print("new_subject:{}\n"
+    #       "new_main_image:{}\n"
+    #       "new_xiaomi_id:{}\n"
+    #       "new_source_url:{}\n"
+    #       "new_shop_id:{}\n"
+    #       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
+    #                                  new_sku_info))
+
     # 然后更换新的属性 ------------------------------------------------------------------------------
     subject_change(new_subject)  # 换标题
     xiaomi_product_id_change(new_xiaomi_id)  # 换店小蜜专有id
     main_images_change(new_main_image)  # 更换主图
-    # 更换sku及缩略图 --仍使用主图
-    sku_creator.sku_handle(sku_info=new_sku_info, )
 
-    #
+    # 更换sku及缩略图 --仍使用主图
+    sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info)
+
     # shop_id_change(new_shop_id)  # 更换shopid
     details_editor.DetailEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details和主图
     details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details和主图

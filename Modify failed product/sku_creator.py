@@ -9,85 +9,147 @@ ic.configureOutput()
 SKU_TEMPLATE_PATH = "../json_cof/"
 
 
-def sku_images_handle(current_pro_sku):
-    """
-    提取产品的skuImage
-    :return: 返回skuImage的可迭代对象
-    """
-    sku_image_list = []  # 最后要返回的skuImage的列表
-    current_pro_sku=json.loads(current_pro_sku)
-    # with open("../json_cof/sku2.json", "r", encoding="utf-8") as f:  # 打开文件
-    #     current_pro_sku = json.load(f)
-    #     f.close()
-
-    # 抽取skuImage 对比set() 得出 各个颜色缩略图url
-    # 然后根据url来分别添加尺寸
-    # 抽取主图
-    # todo 之后可以改为从html中用正则表达式获取url
-    for sku_dict in current_pro_sku:
-
-        for sku_pro_item in sku_dict['aeopSKUProperty']:
-            skuimage = sku_pro_item.get('skuImage', )
-            if skuimage:
-                sku_image_list.append(skuimage)
-
-    sku_image_list = set(sku_image_list)
-    # sku_image_list = ['^' * 50]
-    return sku_image_list
-    # ic(len(sku_image_list))
-    # ic(sku_image_list)
-
-
-def skus_setting(sku_images, sku_template_name="sku_template.json"):
-    """
-    更改skus的算法 skuimage 然后分别设置三个尺寸
-    :param sku_template_name: 要用那个sku模板
-    :param sku_images: 处理好的skuImage的URL list
-    :return: 返回一个sku字符串 或 json列表
+class SkuSetter(object, ):
     """
 
-    result_json_list = []
-
-    sku_template_name = SKU_TEMPLATE_PATH + sku_template_name
-    # 要设置的尺寸和定价
-    template_sku_json = utils.load_json(sku_template_name)
-
-    # 根据模板写好的框架进行增删改查
-    for i, val in enumerate(sku_images, start=1):
-        # ic(i, val)
-        template_sku_json[0]['aeopSKUProperty'][0]['skuImage'] = val
-        template_sku_json[1]['aeopSKUProperty'][0]['skuImage'] = val
-        template_sku_json[2]['aeopSKUProperty'][0]['skuImage'] = val
-
-        # 这里使用深拷贝来防止引用
-        result_json_list.extend(copy.deepcopy(template_sku_json))
-
-        # 将每个都添加到 RESULT_LIST 中
-    # print(json.dumps(result_json_list, ensure_ascii=False))
-    # ic(len(result_json_list))
-
-
-def sku_handle(*args, **kwargs):
     """
-    sku 智能处理
-    :param kwargs:
-    :return:
-    """
-    # ic(kwargs)
-    # ic(args)
-    # exit()
 
-    sku_info = kwargs.get('sku_info', None)
-    images_set = sku_images_handle(current_pro_sku=sku_info)
-    skus_setting(sku_images=images_set)
+    def __init__(self, main_images, sku_info, sku_template_name='sku_template.json'):
+        self.main_images = main_images  # 主图 没有skuimage时备用
+        self.sku_info = sku_info  # skuinfo
+        self.sku_template_name = SKU_TEMPLATE_PATH + sku_template_name  # sku模板路径
+        self.sku_image_list = list()  # 最后去重后的 skuImage list
+        self.template_sku_json = utils.load_json(self.sku_template_name)  # sku模板
+        self.sku_images_handle()  # 执行skuImage搜集 得出列表
+        self.result_json_list = []  # 最终要提交的json列表
 
-    return None
+        self.zippedList = None  # 元组列表
+
+        # DefinitionName 自定义名称取代 “黑色” “白色”
+        self.propertyValueDefinitionName = ["style A", "style B", "style C", "style D", "style E", "style F", "style G",
+                                            "style H",
+                                            "style I", "style J", "style K", ]
+        self.propertyValueId_color = [193, 29, 691, 10, 350852, 366]
+        self.attrVal = ["黑色", "白色", "灰色", "红色", "橙色", "黄色"]
+        self.propertyValueId_size = []
+        self.id = "200000182:193;5:100014064"
+
+        # 创建一个实例后就执行sku设置 -- 执行操作函数
+        self.skus_setting()  # post表单里修改sku项
+
+    def sku_images_handle(self):
+        """
+        提取产品的skuImage
+        :return: 返回skuImage的可迭代对象
+        """
+
+        if not isinstance(self.sku_info, list):
+            # 判断一下是不是list 不是的话先转成list再操作
+            self.sku_info = json.loads(self.sku_info)
+
+        # 然后根据url来分别添加尺寸
+        # 抽取主图
+        # todo 之后可以改为从html中用正则表达式获取url
+        for sku_dict in self.sku_info:
+            for sku_pro_item in sku_dict['aeopSKUProperty']:
+                skuimage = sku_pro_item.get('skuImage', )
+                if skuimage:
+                    self.sku_image_list.append(skuimage)
+
+        # 抽取skuImage set去重 得出 各个颜色缩略图url
+        self.sku_image_list = list(set(self.sku_image_list))
+
+        # ic(len(self.sku_image_list))
+        # ic(self.sku_image_list)
+        # return list(sku_image_list)
+
+    def skus_setting(self):
+        """
+        更改skus的算法 skuimage 然后分别设置三个尺寸
+        """
+
+        # 通过zip函数将skuImage列表和style X 等变更属性打包成一个元组列表分别修改
+        self.zippedList = zip(self.sku_image_list, self.propertyValueDefinitionName, self.propertyValueId_color,
+                              self.attrVal)
+        self.zippedList = list(self.zippedList)
+        # ic(self.zippedList)
+
+        # 分情况来进行sku设定
+        # 1.如果有skuImage缩略图就正常用template sku 拼补
+        if self.sku_image_list:
+            # 根据模板写好的框架进行增删改查 改每个SKU 里面的[skuImage,propertyValueDefinitionName,id,propertyValueId,attrVal]
+            self.set_sku()  # 设置sku细节
+            self.sku_id_splicing()  # 设置sku id
+            # ic(self.result_json_list)
+
+            self.final_modification_submission_form()  # 最后向post表单里填充
+            return
+
+
+
+        # 2.如果sku_images长度为0 就代表取1个主图做skuImage
+        else:
+            main_images = self.main_images.strip("'").split(";")[0]
+            self.template_sku_json[0]['aeopSKUProperty'][0]['skuImage'] = main_images
+            self.template_sku_json[1]['aeopSKUProperty'][0]['skuImage'] = main_images
+            self.template_sku_json[2]['aeopSKUProperty'][0]['skuImage'] = main_images
+
+            # ic(self.template_sku_json)
+            # 最后替换提交表单form里的sku项
+            form_data_handle.data_dict["aeopAeProductSKUs"] = json.dumps(self.template_sku_json)
+            # ic("没有skuImage - 单主图sku：", template_sku_json)
+            return None
+
+    def set_sku(self):
+        # 清空最终列表 保证无误
+        self.result_json_list = []
+        # 根据模板写好的框架进行增删改查 改每个SKU 里面的[skuImage,propertyValueDefinitionName,id,propertyValueId,attrVal]
+        # ic(self.zippedList)
+        for val in self.zippedList:
+            # 设置缩略图
+            self.template_sku_json[0]['aeopSKUProperty'][0]['skuImage'] = val[0]
+            self.template_sku_json[1]['aeopSKUProperty'][0]['skuImage'] = val[0]
+            self.template_sku_json[2]['aeopSKUProperty'][0]['skuImage'] = val[0]
+
+            # 设置自定义颜色属性
+            self.template_sku_json[0]['aeopSKUProperty'][0]['propertyValueDefinitionName'] = val[1]
+            self.template_sku_json[1]['aeopSKUProperty'][0]['propertyValueDefinitionName'] = val[1]
+            self.template_sku_json[2]['aeopSKUProperty'][0]['propertyValueDefinitionName'] = val[1]
+            # 设置propertyValueId_color
+            self.template_sku_json[0]['aeopSKUProperty'][0]['propertyValueId'] = val[2]
+            self.template_sku_json[1]['aeopSKUProperty'][0]['propertyValueId'] = val[2]
+            self.template_sku_json[2]['aeopSKUProperty'][0]['propertyValueId'] = val[2]
+
+            # 设置attrVal
+            self.template_sku_json[0]['aeopSKUProperty'][0]['attrVal'] = val[3]
+            self.template_sku_json[1]['aeopSKUProperty'][0]['attrVal'] = val[3]
+            self.template_sku_json[2]['aeopSKUProperty'][0]['attrVal'] = val[3]
+
+            # 这里使用深拷贝来防止引用
+
+            self.result_json_list.extend(copy.deepcopy(self.template_sku_json))
+
+    def sku_id_splicing(self):
+        # 设置id
+        for i in self.result_json_list:
+            self.temp_colorid = i['aeopSKUProperty'][0]['propertyValueId']
+            self.temp_sizeid = i['aeopSKUProperty'][1]['propertyValueId']
+
+            self.temp_sizeid, self.temp_colorid = list(map(str, [self.temp_sizeid, self.temp_colorid]))
+
+            # ic(self.temp_sizeid,self.temp_colorid)
+            self.id = "200000182:" + self.temp_colorid + ";5:" + self.temp_sizeid
+            i['id'] = self.id
+            i['id'] = self.id
+            i['id'] = self.id
+
+    def final_modification_submission_form(self):
+        # 最后替换提交表单form里的sku项
+        form_data_handle.data_dict["aeopAeProductSKUs"] = json.dumps(self.result_json_list)
+        # ic(self.result_json_list)
+        # 结束sku设置
 
 
 if __name__ == '__main__':
-    pass
-    # skus_change()
-    # sku_images_handle()
-
-    sku_handle(123)
-    # skus_setting(sku_images_handle())
+    skuinfo = utils.load_json(file_name="../json_cof/sku2.json")
+    sku = SkuSetter(main_images='1', sku_info=skuinfo)

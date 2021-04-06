@@ -11,15 +11,15 @@ imageURLs: https://ae01.alicdn.com/kf/H0ffc865a6132447da40b1b905eaab862Q/NetCat-
 productUnit: 100000015
 packageType: 0
 lotNum:
-bulkOrder:
-bulkDiscount:
+bulkOrder: 10
+bulkDiscount: 30
 aeopAeProductSKUs: [{"id":"200000182:193","ipmSkuStock":999,"skuPrice":"9","skuStock":true,"aeopSKUProperty":[{"propertyValueId":193,"skuImage":"","propertyValueDefinitionName":"style A","skuPropertyId":200000182,"themeVal":"颜色","attrVal":"黑色"}],"skuCode":""}]
 productPrice:
 deliveryTime: 7
 wsValidNum: 30
 reduceStrategy: payment_success_deduct
 detail:
-grossWeight: 0.02
+grossWeight: 0.04
 isPackSell: 0
 baseUnit:
 addUnit:

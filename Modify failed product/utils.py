@@ -1,5 +1,6 @@
 import json
 
+
 # data_dict = {}
 
 
@@ -22,7 +23,7 @@ def load_file_wrapper(file_name, ):
 
 
 def load_file(file_name, ):
-    print(type(file_name))
+    # print(type(file_name))
     with open(file_name, "r", encoding="utf-8") as f:  # 打开文件
         form_text = f.read()  # 读取文件
         f.close()
@@ -47,18 +48,9 @@ def handle_headers(header_str):
     # print(internal_dict)
     return internal_dict
 
-# def convert2dictionary(data_str=form_text) -> dict:
-#     """
-#     将字符串转换为字典 装饰器
-#     :return: data
-#     """
-#
-#     for line in data_str.split('\n'):
-#         temp_list = line.split(': ', 1)
-#         if len(temp_list) == 2:
-#             key, value = temp_list
-#             data_dict[key] = value
-#
-#     # add_details_of_mobile()
-#
-#     return data_dict
+
+def load_json(file_name):
+    with open(file_name, "r", encoding="utf-8") as f:  # 打开文件
+        text = json.load(f)  # 读取文件
+        f.close()
+    return text

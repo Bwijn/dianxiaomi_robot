@@ -6,7 +6,7 @@ import requests
 from bs4 import BeautifulSoup
 from icecream import ic
 
-import header
+import sku_creator
 
 import request_fun
 
@@ -109,23 +109,18 @@ def extract_sku_info(bs4_obj):
     bs4_obj = bs4_obj.find("input", id="aeopAeProductSKUs")  # 找到这个标签的特征
     sku_info = bs4_obj.attrs['value']
 
-    # print(sku_info)
+    sku_info = json.loads(sku_info)
+
+    ic(sku_info)
     # print(type(sku_info))
     return sku_info
 
 
 if __name__ == '__main__':
-    t_url = 'https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711671298366'
+    t_url = "https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711700417334"
+
     rettt = request_fun.RequestPro.res_text(t_url)
 
-    sku_string = extract_sku_info(rettt)
-    # 测试正则替换
-    pattern = re.compile(r"(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]")
+    sku_info = extract_sku_info(rettt)
 
-    ic(pattern.findall(string=sku_string))
-
-    # extract_shop_id(bs4_obj=rettt)
-    # extract_main_image_url(rettt)
-    # extract_groupId_groupIds(rettt)
-    # extract_freightTemplateId(rettt)
-    # res_text('https://www.dianxiaomi.com/smtProduct/edit.htm?id=46483711665250168')
+    sku_creator.SkuSetter(main_images="UNKNOW;", sku_info=sku_info)

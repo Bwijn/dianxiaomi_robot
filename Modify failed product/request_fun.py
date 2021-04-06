@@ -13,15 +13,13 @@ class RequestPro(object):
     """
     # 获取待上货的列表
     Pending_URL = "https://www.dianxiaomi.com/smtProduct/list.htm"
+    # Pending_URL = "https://www.dianxiaomi.com/smtProduct/offline.htm?dxmState=offline&dxmOfflineState=publishFail&shopId=-1"
 
     # add.json 保存或上货的api
     SAVE_OR_PUBLISH_URL = "https://www.dianxiaomi.com/smtProduct/add.json"
 
     # 全局bs4对象
     GLOBAL_OBJ_BS4 = None
-
-
-
 
     @classmethod
     def get_list_page(cls, url=Pending_URL):
@@ -43,8 +41,8 @@ class RequestPro(object):
 
         resp = requests.post(headers=headers.dict, data=form_data, url=cls.Pending_URL)
 
-        # print("发布结果：\n", resp.text)
-        # print("发布状态码：", resp.status_code)
+        print("请求list结果：\n", resp.text)
+        print("请求list状态码：", resp.status_code)
         soup = BeautifulSoup(resp.text, "lxml")
         return soup
 
@@ -64,7 +62,7 @@ class RequestPro(object):
         form_data_handle.replace_product_all()  # 更新请求表单
         tem_data = form_data_handle.data_dict
 
-        ic(tem_data)
+        # ic(tem_data)
         resp = requests.post(headers=headers.dict, data=tem_data, url=cls.SAVE_OR_PUBLISH_URL, )
         print("发布状态码：", resp.status_code)
         print("发布结果：\n", resp.text)
