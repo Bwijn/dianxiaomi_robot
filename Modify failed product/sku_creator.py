@@ -14,18 +14,38 @@ ic.configureOutput()
 SKU_TEMPLATE_PATH = "../json_cof/"
 
 
+def sku_images_handle(sku_info, sku_image_list):
+    """
+    提取产品的skuImage
+    :return: 返回skuImage的可迭代对象
+    """
+
+    if not isinstance(sku_info, list):
+        # 判断一下是不是list 不是的话先转成list再操作
+        sku_info = json.loads(sku_info)
+
+    # 然后根据url来分别添加尺寸
+    # 抽取主图
+    # todo 之后可以改为从html中用正则表达式获取url
+    for sku_dict in sku_info:
+        for sku_pro_item in sku_dict['aeopSKUProperty']:
+            skuImage = sku_pro_item.get('skuImage', )
+            if skuImage:
+                sku_image_list.append(skuImage)
+
+
 class SkuSetter(object, ):
     """
 
     """
 
-    def __init__(self, main_images, sku_info, sku_template_name='sku_template.json'):
+    def __init__(self, sku_info, main_images="unknown", sku_template_name='sku_template.json'):
         self.main_images = main_images  # 主图 没有skuimage时备用
-        self.sku_info = sku_info  # skuinfo
+        self.sku_info = sku_info  # 传入的 skuinfo dianxiaomi HTML里面的<input value=.....>
         self.sku_template_name = SKU_TEMPLATE_PATH + sku_template_name  # sku模板路径
         self.sku_image_list = list()  # 最后去重后的 skuImage list
         self.template_sku_json = utils.load_json(self.sku_template_name)  # sku模板
-        self.sku_images_handle()  # 执行skuImage搜集 得出列表
+        # self.sku_images_handle()  # 执行skuImage搜集 得出列表
         self.result_json_list = []  # 最终要提交的json列表
 
         self.zippedList = None  # 元组列表
@@ -40,7 +60,7 @@ class SkuSetter(object, ):
         self.id = "200000182:193;5:100014064"
 
         # 创建一个实例后就执行sku设置 -- 执行操作函数
-        self.skus_setting()  # post表单里修改sku项
+        # self.skus_setting()  # post表单里修改sku项
 
     def sku_images_handle(self):
         """
@@ -72,6 +92,7 @@ class SkuSetter(object, ):
         """
         更改skus的算法 skuimage 然后分别设置三个尺寸
         """
+        self.sku_images_handle()  # 先填充sku_images_list
 
         # 通过zip函数将skuImage列表和style X 等变更属性打包成一个元组列表分别修改
         self.zippedList = zip(self.sku_image_list, self.propertyValueDefinitionName, self.propertyValueId_color,
@@ -85,7 +106,7 @@ class SkuSetter(object, ):
             # 根据模板写好的框架进行增删改查 改每个SKU 里面的[skuImage,propertyValueDefinitionName,id,propertyValueId,attrVal]
             self.set_sku()  # 设置sku细节
             self.sku_id_splicing()  # 设置sku id
-            # ic(self.result_json_list)
+            ic(self.result_json_list)
 
             self.final_modification_submission_form()  # 最后向post表单里填充
             return
@@ -155,6 +176,13 @@ class SkuSetter(object, ):
         # 结束sku设置
 
 
+temporary_sku_instance = SkuSetter(main_images="1", sku_info="1", )
+
 if __name__ == '__main__':
+    # t_sku.sku_image_list = [1, 2, 3]
+    # ic(t_sku.sku_image_list)
+
     skuinfo = utils.load_json(file_name="../json_cof/sku2.json")
     sku = SkuSetter(main_images='1', sku_info=skuinfo)
+    sku.sku_images_handle()
+    sku.skus_setting()

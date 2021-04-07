@@ -130,12 +130,21 @@ def replace_product_all():
     main_images_change(new_main_image)  # 更换主图
 
     # 更换sku及缩略图 --仍使用主图
-    sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info)
+    sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info).skus_setting()
 
-    # shop_id_change(new_shop_id)  # 更换shopid
-    details_editor.DetailEditor.change_mobile_details(images_url=new_main_image, _in_dict=data_dict)  # 更换手机端details和主图
+    # details_editor.DetailEditor.change_mobile_details(
+    #     new_sku_info=new_sku_info,
+    #     images_url=new_main_image,
+    #     _in_dict=data_dict)
+
     details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details和主图
     details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
+
+    # __________________________________________________________________________________________________________________________________
+    # 更换手机端的描述主图
+    details_editor.DetailEditor_instance.set_mobile_details(_in_dict=data_dict, new_sku_info=new_sku_info,
+                                                            images_url=new_main_image)
+
     source_url_change(new_source_url)  # 更换source_url（采集地址）
 
 

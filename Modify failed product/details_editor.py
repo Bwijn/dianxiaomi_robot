@@ -6,9 +6,14 @@
 2. 主图详情
 3. 描述文字
 """
+import copy
 import json
 
+import utils
 from icecream import ic
+import sku_creator
+
+import form_data_handle
 
 
 class DetailEditor(object):
@@ -31,32 +36,60 @@ class DetailEditor(object):
     主要功能是编辑单独每一个产品的app端详情描述
     """
 
-    @classmethod
-    def editor(cls=None):
-        print(cls)
+    def mobile_dict_add_describe_images(self, sku_image_list):
         """
-
+        向mobile_describe.json 里面添加主图详情
         :return:
         """
-        print(cls.mro())
+        # 先复制再删除
+        temporary_dict = {'style': {'hasMargin': False, 'height': '0', 'width': '0'},
+                          'targetUrl': '',
+                          'url': 'https://ae01.alicdn.com/kf/H9cf7d720bf2246a8b81eb1aa8138472fg/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg'}
 
-    @classmethod
-    def change_mobile_details(cls, _in_dict, images_url="unk;"):
+        # 清零列表
+        self.text['moduleList'][1]["images"] = []
+
+        for image in sku_image_list:
+            # ic(image)
+            temporary_dict['url'] = image
+            # ic(temporary_dict)
+            self.text['moduleList'][1]["images"].append(temporary_dict.copy())
+
+    def set_mobile_details(self, _in_dict, new_sku_info, images_url="unk;"):
         """
-        todo 目前只能上一个主图 可随时添加多个
         传入的可能是一长串用 ;  分割的主图 所以要注意区分
+        :param new_sku_info:
         :param _in_dict: 修改字典里的手机端描述
         :param images_url: 主图 url
         :param cls:
         :return:
         """
 
-        images_url = images_url.strip("'").split(";")
-        images_url = images_url[0]  # 这个是单个主图
-        # 改手机端详情主图
-        cls.text['moduleList'][1]["images"][0]['url'] = images_url  # 替换手机details主图
-        _in_dict['mobileDetail'] = json.dumps(cls.text)
-        # ic(_in_dict)
+        # 传入skuImage list 将list中的缩略图拼入描述中去
+        t_sku = sku_creator.temporary_sku_instance
+        t_sku.sku_info = new_sku_info
+        t_sku.sku_images_handle()
+
+        t_sku.sku_image_list=[]
+        # 如果skuImage里有图 则全放到手机描述中去
+        if t_sku.sku_image_list:
+            self.mobile_dict_add_describe_images(sku_image_list=t_sku.sku_image_list)
+            # 改手机端详情主图
+            # cls.text['moduleList'][1]["images"][0]['url'] = images_url  # 替换手机details主图
+            _in_dict['mobileDetail'] = json.dumps(self.text)
+
+        else:
+
+            images_url = images_url.strip("'").split(";")
+            images_url = images_url[0]  # 这个是单个主图
+            temporary_dict = {'style': {'hasMargin': False, 'height': '0', 'width': '0'},
+                              'targetUrl': '',
+                              'url': 'https://ae01.alicdn.com/kf/H9cf7d720bf2246a8b81eb1aa8138472fg/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg'}
+            self.text['moduleList'][1]["images"] = []  # 清零列表
+            temporary_dict['url'] = images_url
+            self.text['moduleList'][1]["images"].append(temporary_dict)  # 替换手机details主图
+            ic(temporary_dict)
+            ic(self.text)
 
     @classmethod
     def pc_details(cls, _in_dict, images_url="unk;"):
@@ -75,14 +108,9 @@ class DetailEditor(object):
         _in_dict['aeopAeProductPropertys'] = json.dumps(cls.product_propertys)
 
 
-if __name__ == '__main__':
-    # test_url2 = "YYYYYYY;IIIIII;OOOOOOO"
-    # test_url = "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1m3AEd1uSBuNjy1Xcq6AYjFXaJ/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1zZina5QnBKNjSZFmq6AApVXaA/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1hj.Gd25TBuNjSspmq6yDRVXaH/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1CvCiaZuYBuNkSmRyq6AA3pXa4/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg;https://ae01.alicdn.com/kf/HTB1ge.gdYGYBuNjy0Foq6AiBFXaK/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg"
-    # DetailEditor.change_mobile_details(images_url=test_url2, _in_dict={'mobileDetail': 1})
-    # print(type(DetailEditor.editor()))
+DetailEditor_instance = DetailEditor()
 
-    # ic(DetailEditor.text)
-    # temp = json.dumps(DetailEditor.text)
-    # ic(temp)
-    # DetailEditor.change_mobile_details({})
-    pass
+if __name__ == '__main__':
+    sku_info = utils.load_json("../json_cof/sku2.json")
+    # ic(sku_info)
+    DetailEditor_instance.set_mobile_details(_in_dict=form_data_handle.data_dict, new_sku_info=sku_info)
