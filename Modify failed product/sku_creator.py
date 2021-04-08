@@ -76,6 +76,10 @@ class SkuSetter(object, ):
         # 抽取主图
         # todo 之后可以改为从html中用正则表达式获取url
         for sku_dict in self.sku_info:
+            # 下架列表中 sku的信息不一样 直接结束处理skuImage 直接把列表清零 单一主图
+            if self.sku_info[0].get("aeopSKUProperty", None) is None:
+                self.sku_image_list = []
+                return
             for sku_pro_item in sku_dict['aeopSKUProperty']:
                 skuimage = sku_pro_item.get('skuImage', )
                 if skuimage:
@@ -106,7 +110,7 @@ class SkuSetter(object, ):
             # 根据模板写好的框架进行增删改查 改每个SKU 里面的[skuImage,propertyValueDefinitionName,id,propertyValueId,attrVal]
             self.set_sku()  # 设置sku细节
             self.sku_id_splicing()  # 设置sku id
-            ic(self.result_json_list)
+            # ic(self.result_json_list)
 
             self.final_modification_submission_form()  # 最后向post表单里填充
             return
@@ -176,7 +180,7 @@ class SkuSetter(object, ):
         # 结束sku设置
 
 
-temporary_sku_instance = SkuSetter(main_images="1", sku_info="1", )
+# temporary_sku_instance = SkuSetter(main_images="1", sku_info="1", )
 
 if __name__ == '__main__':
     # t_sku.sku_image_list = [1, 2, 3]

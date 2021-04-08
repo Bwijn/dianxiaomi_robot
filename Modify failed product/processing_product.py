@@ -97,9 +97,14 @@ def extract_source_url(bs4_obj):
     :param bs4_obj:
     :return:
     """
-    bs4_obj = bs4_obj.find("input", id="sourceUrl11")  # 找到这个标签的特征
+
+    # 两种情况 找到那个用那个
+    source_url_input_tag1 = bs4_obj.find("input", id="sourceUrl11")  # 找到这个标签的特征
+
+    source_url_input_tag2 = bs4_obj.find("input", id="sourceUrl10")  # 找到这个标签的特征
 
     # 找到id
+    bs4_obj = source_url_input_tag1 if source_url_input_tag1 else source_url_input_tag2
     source_url = bs4_obj.attrs['value']
 
     return source_url

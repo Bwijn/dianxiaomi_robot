@@ -7,6 +7,7 @@ import form_data_handle
 from header import Header
 
 from init_config import kang as k
+import utils
 
 
 class RequestPro(object):
@@ -31,13 +32,24 @@ class RequestPro(object):
 
         headers = Header('get_product_list_header')  # 更新请求头
 
+        # 待发布列表
         if url.find("list.htm") != -1:
             resp = requests.post(headers=headers.dict, data=k.get("To be released_form_data"),
                                  url=url)
 
-        else:
+        elif url.find("offline") != -1:
             resp = requests.get(headers=headers.dict, data=k.get("To be released_form_data"),
                                 url=url)
+
+        elif url.find("pageList") != -1:
+            data = utils.post_data2dict(post_data=k.get("product_list_post_data", None))
+            resp = requests.post(headers=headers.dict, data=data,
+                                 url=url)
+
+        else:
+            print("product_list 不正确 查修！！！")
+            exit(00000000000)
+            return None
 
         # print("请求list结果：\n", resp.text)
         # print("请求list状态码：", resp.status_code)

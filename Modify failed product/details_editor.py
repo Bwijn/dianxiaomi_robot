@@ -66,20 +66,19 @@ class DetailEditor(object):
         """
 
         # 传入skuImage list 将list中的缩略图拼入描述中去
-        t_sku = sku_creator.temporary_sku_instance
-        t_sku.sku_info = new_sku_info
+        t_sku = sku_creator.SkuSetter(sku_info=new_sku_info, )
+        # 创建新的实例对象去处理new_sku_info =>得出skuImage_list
         t_sku.sku_images_handle()
+        # t_sku.sku_image_list => 这是最后处理的skuImage
 
-        t_sku.sku_image_list=[]
-        # 如果skuImage里有图 则全放到手机描述中去
+        # 如果skuImage_list里有图 则全放到手机描述中去
         if t_sku.sku_image_list:
             self.mobile_dict_add_describe_images(sku_image_list=t_sku.sku_image_list)
             # 改手机端详情主图
             # cls.text['moduleList'][1]["images"][0]['url'] = images_url  # 替换手机details主图
             _in_dict['mobileDetail'] = json.dumps(self.text)
 
-        else:
-
+        else:  # 没有的话只能用一个主图了 -_-!
             images_url = images_url.strip("'").split(";")
             images_url = images_url[0]  # 这个是单个主图
             temporary_dict = {'style': {'hasMargin': False, 'height': '0', 'width': '0'},
@@ -87,9 +86,8 @@ class DetailEditor(object):
                               'url': 'https://ae01.alicdn.com/kf/H9cf7d720bf2246a8b81eb1aa8138472fg/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg'}
             self.text['moduleList'][1]["images"] = []  # 清零列表
             temporary_dict['url'] = images_url
-            self.text['moduleList'][1]["images"].append(temporary_dict)  # 替换手机details主图
-            ic(temporary_dict)
-            ic(self.text)
+            self.text['moduleList'][1]["images"].append(temporary_dict.copy())  # 替换手机details主图
+            _in_dict['mobileDetail'] = json.dumps(self.text)
 
     @classmethod
     def pc_details(cls, _in_dict, images_url="unk;"):

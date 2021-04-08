@@ -124,6 +124,8 @@ def replace_product_all():
     #       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
     #                                  new_sku_info))
 
+    # exit()
+
     # 然后更换新的属性 ------------------------------------------------------------------------------
     subject_change(new_subject)  # 换标题
     xiaomi_product_id_change(new_xiaomi_id)  # 换店小蜜专有id
@@ -131,11 +133,6 @@ def replace_product_all():
 
     # 更换sku及缩略图 --仍使用主图
     sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info).skus_setting()
-
-    # details_editor.DetailEditor.change_mobile_details(
-    #     new_sku_info=new_sku_info,
-    #     images_url=new_main_image,
-    #     _in_dict=data_dict)
 
     details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details和主图
     details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性

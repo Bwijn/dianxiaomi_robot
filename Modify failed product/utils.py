@@ -49,8 +49,22 @@ def handle_headers(header_str):
     return internal_dict
 
 
+# json文件转list
 def load_json(file_name):
     with open(file_name, "r", encoding="utf-8") as f:  # 打开文件
         text = json.load(f)  # 读取文件
         f.close()
     return text
+
+
+# &连接的post data 转字典
+def post_data2dict(post_data):
+    # post 表单数据 转换字典
+    post_data = post_data.split("&")
+    str_dic = dict()
+    for i in post_data:
+        key = i.split("=")[0]
+        val = i.split("=")[1]
+        str_dic[key] = val
+
+    return str_dic
