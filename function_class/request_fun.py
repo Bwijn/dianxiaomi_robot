@@ -6,7 +6,7 @@ import form_data_handle
 
 from header import Header
 
-from init_config import kang as k
+from settings import kang as k
 import utils
 
 
@@ -63,9 +63,8 @@ class RequestPro(object):
         请求 url GET https://www.dianxiaomi.com/smtProduct/add.json 发送表单
         data字典里面 op =1 保存 =2 发布
         :param url:
-        :return: res.text 返回给控制台 要监控的!!!
+        :return:
         """
-        # headers = header.handle_headers(header_str=header.save_or_publish_header)
 
         headers = Header('save_or_publish_header')  # 更新请求头
 
@@ -76,6 +75,11 @@ class RequestPro(object):
         resp = requests.post(headers=headers.dict, data=tem_data, url=cls.SAVE_OR_PUBLISH_URL, )
         print("发布状态码：", resp.status_code)
         print("发布结果：\n", resp.text)
+
+        # 提交的太频繁可能会出错，所以出错就立即抛出异常停止
+        # if resp.status_code != 200:
+        #     raise Exception("发布失败")
+
         return True
 
     @classmethod

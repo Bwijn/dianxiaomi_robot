@@ -22,7 +22,7 @@ class DetailEditor(object):
     with open("../json_cof/product_propertys.json", "r", encoding="utf-8") as f:  # 打开文件
         product_propertys = json.load(f)  # 读取文件
         f.close()
-    with open("pc_detail.html", "r", encoding="utf-8") as f:  # 打开文件
+    with open("../source_text_information/pc_detail.html", "r", encoding="utf-8") as f:  # 打开文件
         pc_text = f.read()  # 读取文件
         f.close()
 

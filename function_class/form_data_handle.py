@@ -9,7 +9,7 @@ from icecream import ic
 
 import sku_creator
 import utils
-
+import settings
 import processing_product
 import details_editor
 import request_fun
@@ -37,41 +37,6 @@ def main_images_change(image_urls):
 
 def subject_change(subject):
     data_dict['subject'] = subject
-
-
-def skus_change(main_images_url="UNKNOWN"):
-    """
-    修改sku 添加sku小缩略图
-    替换 color_name 的选择小图 直接用第一个主图url就可以
-    通过正则表达式替换 因为 目标dict是一个字符串 ↓
-    "aeopSKUProperty":[{"propertyValueId":193,"skuImage":"xxx","。。。。
-
-    :return:
-    """
-
-    # 这里要将多个主图切割成一个主图
-    # 因为采集来的可能有多个主图,所以需要切割为1个
-    main_images_url = main_images_url.strip("'").split(";")
-    main_images_url = main_images_url[0]  # 这个是单个主图
-
-    # 这里读取json文件，修改json
-    with open('sku_variant.json', 'r', encoding='utf-8') as f:
-        data = json.load(f)
-        f.close()
-
-    # 替换thumbnail
-    for i, val in enumerate(data):
-        val['aeopSKUProperty'][0]['skuImage'] = main_images_url
-        # print(val)
-    # print("读取的sku的信息",json.dumps(indent=2,obj=data))
-
-    # 将 sku 替换为 修改完的 json文件
-    data_dict[
-        'aeopAeProductSKUs'] = json.dumps(indent=2, obj=data)
-
-    # print("sku修改后：：：\n",data)
-
-    return None
 
 
 def xiaomi_product_id_change(xiaomi_id):
@@ -102,6 +67,10 @@ def shop_id_change(shopid):
     data_dict['shopId'] = shopid
 
 
+def op_state_code_change():
+    data_dict['op'] = settings.OP_CODE_STATE
+
+
 def replace_product_all():
     """
     替换新的 subject、sku_image、price、xiaomi_id、
@@ -124,13 +93,11 @@ def replace_product_all():
     #       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
     #                                  new_sku_info))
 
-    # exit()
-
     # 然后更换新的属性 ------------------------------------------------------------------------------
     subject_change(new_subject)  # 换标题
     xiaomi_product_id_change(new_xiaomi_id)  # 换店小蜜专有id
     main_images_change(new_main_image)  # 更换主图
-
+    op_state_code_change()  # 操作状态 保存或发布 随setting.py [OP_CODE_STATE]变化
     # 更换sku及缩略图 --仍使用主图
     sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info).skus_setting()
 

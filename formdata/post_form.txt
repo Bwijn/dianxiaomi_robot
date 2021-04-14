@@ -35,7 +35,7 @@ sizechartId:
 activity:
 extraImages:
 aeopNationalQuoteConfiguration: {}
-op: 1
+op: 1是保存 2是发布
 isCheck: true
 marketImg1:
 marketImg2:

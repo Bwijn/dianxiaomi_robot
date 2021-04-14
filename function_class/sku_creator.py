@@ -53,9 +53,9 @@ class SkuSetter(object, ):
         # DefinitionName 自定义名称取代 “黑色” “白色”
         self.propertyValueDefinitionName = ["style A", "style B", "style C", "style D", "style E", "style F", "style G",
                                             "style H",
-                                            "style I", "style J", "style K", ]
-        self.propertyValueId_color = [193, 29, 691, 10, 350852, 366]
-        self.attrVal = ["黑色", "白色", "灰色", "红色", "橙色", "黄色"]
+                                            "style I", "style J", "style K", "style L", "style M", "style N", ]
+        self.propertyValueId_color = [771,175,173,496,350686,1052,29, 691, 10, 350852, 366, 193]
+        self.attrVal = ["米黄色","绿色","蓝色","紫色","棕色","粉色","白色", "灰色", "红色", "橙色", "黄色", "黑色",]
         self.propertyValueId_size = []
         self.id = "200000182:193;5:100014064"
 
