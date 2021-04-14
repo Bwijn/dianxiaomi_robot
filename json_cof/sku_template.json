@@ -2,20 +2,20 @@
   {
     "id": "200000182:193;5:100014064",
     "ipmSkuStock": 9999,
-    "skuPrice": "4",
+    "skuPrice": "4.5",
     "skuStock": true,
     "aeopSKUProperty": [
       {
         "propertyValueId": 193,
-        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
-        "propertyValueDefinitionName": "style A",
+        "skuImage": "https://ae01.alicdn.com/kf/H964fe4be67f640c7a95c32cf1c36a8b4G/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg",
+        "propertyValueDefinitionName": "Style A",
         "skuPropertyId": 200000182,
         "themeVal": "颜色",
         "attrVal": "黑色"
       },
       {
         "propertyValueId": 100014064,
-        "propertyValueDefinitionName": "10 cm",
+        "propertyValueDefinitionName": "12cm",
         "skuPropertyId": 5,
         "themeVal": "尺寸",
         "attrVal": "S"
@@ -26,13 +26,13 @@
   {
     "id": "200000182:193;5:361386",
     "ipmSkuStock": 9999,
-    "skuPrice": "6.5",
+    "skuPrice": "7.5",
     "skuStock": true,
     "aeopSKUProperty": [
       {
         "propertyValueId": 193,
-        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
-        "propertyValueDefinitionName": "style A",
+        "skuImage": "https://ae01.alicdn.com/kf/H964fe4be67f640c7a95c32cf1c36a8b4G/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg",
+        "propertyValueDefinitionName": "Style A",
         "skuPropertyId": 200000182,
         "themeVal": "颜色",
         "attrVal": "黑色"
@@ -50,13 +50,13 @@
   {
     "id": "200000182:193;5:361385",
     "ipmSkuStock": 9999,
-    "skuPrice": "12.4",
+    "skuPrice": "12.5",
     "skuStock": true,
     "aeopSKUProperty": [
       {
         "propertyValueId": 193,
-        "skuImage": "https://ae01.alicdn.com/kf/HTB1atW6a98YBeNkSnb4q6yevFXaI/Three-Ratels-TZ-1200-17-1-15cm-1-4-pieces-border-collie-on-board-car-sticker.jpg",
-        "propertyValueDefinitionName": "style A",
+        "skuImage": "https://ae01.alicdn.com/kf/H964fe4be67f640c7a95c32cf1c36a8b4G/EARLFAMILY-13cm-x-6-6cm-for-Metal-Slug-X-Logo-Car-Stickers-Vinyl-Waterproof-Scratch-proof.jpg",
+        "propertyValueDefinitionName": "Style A",
         "skuPropertyId": 200000182,
         "themeVal": "颜色",
         "attrVal": "黑色"
