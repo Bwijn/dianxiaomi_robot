@@ -114,6 +114,7 @@ def extract_sku_info(bs4_obj):
     bs4_obj = bs4_obj.find("input", id="aeopAeProductSKUs")  # 找到这个标签的特征
     sku_info = bs4_obj.attrs['value']
 
+    # ic(sku_info)
     sku_info = json.loads(sku_info)
 
     return sku_info

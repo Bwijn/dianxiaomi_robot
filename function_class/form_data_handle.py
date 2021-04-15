@@ -15,7 +15,8 @@ import details_editor
 import request_fun
 
 # 这里读取json文件，修改json
-with open('../formdata/post_form.txt', 'r', encoding='utf-8') as f:
+post_form_file = "../formdata/" + settings.CURRENT_CONFIG["post_form"]
+with open(post_form_file, 'r', encoding='utf-8') as f:
     data_dict = f.read()
     data_dict = utils.handle_headers(data_dict)  # 转换为字典
     # print(json.dumps(data_dict, indent=4, ensure_ascii=False))
@@ -82,29 +83,26 @@ def replace_product_all():
     new_main_image = processing_product.extract_main_image_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_xiaomi_id = processing_product.extract_product_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_source_url = processing_product.extract_source_url(request_fun.RequestPro.GLOBAL_OBJ_BS4)
-    new_shop_id = processing_product.extract_shop_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
+    # new_shop_id = processing_product.extract_shop_id(request_fun.RequestPro.GLOBAL_OBJ_BS4)
     new_sku_info = processing_product.extract_sku_info(request_fun.RequestPro.GLOBAL_OBJ_BS4)
-
-    # print("new_subject:{}\n"
-    #       "new_main_image:{}\n"
-    #       "new_xiaomi_id:{}\n"
-    #       "new_source_url:{}\n"
-    #       "new_shop_id:{}\n"
-    #       "new_sku_info:{}\n".format(new_subject, new_main_image, new_xiaomi_id, new_source_url, new_shop_id,
-    #                                  new_sku_info))
+    skuImageList = sku_creator.SkuSetter(sku_info=new_sku_info)
+    skuImageList = skuImageList.skuimage_extraction()
 
     # 然后更换新的属性 ------------------------------------------------------------------------------
     subject_change(new_subject)  # 换标题
     xiaomi_product_id_change(new_xiaomi_id)  # 换店小蜜专有id
     main_images_change(new_main_image)  # 更换主图
     op_state_code_change()  # 操作状态 保存或发布 随setting.py [OP_CODE_STATE]变化
+
     # 更换sku及缩略图 --仍使用主图
     sku_creator.SkuSetter(main_images=new_main_image, sku_info=new_sku_info).skus_setting()
 
-    details_editor.DetailEditor.pc_details(images_url=new_main_image, _in_dict=data_dict)  # 更换PC端details和主图
-    details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)  # 更换品牌等自定义属性
+    # 更换PC端details和主图
+    details_editor.DetailEditor.pc_details(images_url=new_main_image, skuImageList=skuImageList, _in_dict=data_dict)
 
-    # __________________________________________________________________________________________________________________________________
+    # 更换品牌等自定义属性
+    details_editor.DetailEditor.modify_product_propertys(_in_dict=data_dict)
+
     # 更换手机端的描述主图
     details_editor.DetailEditor_instance.set_mobile_details(_in_dict=data_dict, new_sku_info=new_sku_info,
                                                             images_url=new_main_image)

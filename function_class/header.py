@@ -25,5 +25,7 @@ class Header(object, ):
 
 
 if __name__ == '__main__':
-    h = Header(header_file_name='get_item_edit_page_header')
-    print(h.dict)
+    # h = Header(header_file_name='get_item_edit_page_header')
+    # print(h.dict)
+
+    pass
