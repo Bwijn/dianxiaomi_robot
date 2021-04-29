@@ -1,8 +1,7 @@
-import json
-
+# from function_class import *
 
 # data_dict = {}
-
+import json
 
 def load_file_wrapper(file_name, ):
     """
@@ -68,3 +67,7 @@ def post_data2dict(post_data):
         str_dic[key] = val
 
     return str_dic
+
+
+if __name__ == '__main__':
+    pass
