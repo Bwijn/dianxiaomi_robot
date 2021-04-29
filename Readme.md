@@ -1,20 +1,16 @@
-### 读取json的步骤必须要str()
+#店小蜜自动铺货机器人
 
-### 格式化为字符串！！！！
+# 使用之前请配置setting.py确定参数
 
-*使用前 复制add.json form表单 到 form_data_handle*
-
+master -> 目前用的
+dev -> 重构过一回，重构的内容都在里面
 
 > 更换上货用户之前：
-> 1. 更换header conf:
-> 2. 改post_form:
-> 3. 更换自定义价格 (sku_template.json)
-   在全局设立文件名
-> 4. processing_product.py 处理，提取新产品标题等重要信息，并返回
+> 1. 更换请求的header,:
+> 2. 更换post_form模板表单:
+> 3. 更换用户自己的价格模板 (sku_template.json)
 
 
 
------------------
 
-
-![RUNOOB 图标](running_time.png)
+![脚本运行时截图](running_time.png)
