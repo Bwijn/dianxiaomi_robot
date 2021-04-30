@@ -1,8 +1,5 @@
-venv
+/venv
 
-#*.py
-#*.html
 
-.idea/
-json_cof/
-#!function_class/*
+/.idea
+__pycache__/
